@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { LOGIN_URL } from '../config/apiConfig'; // Import the centralized URL
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -11,36 +12,35 @@ export default function Login() {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    const loginform = {username,password}
+    const loginform = { username, password };
     console.log(loginform);
-    fetch('http://localhost:8082/login', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginform),
+
+    fetch(LOGIN_URL, { // Use centralized URL
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginform),
     })
-    .then(response => {
+      .then(response => {
         if (response.ok) {
-            return response.json(); // Parse JSON if login is successful
+          return response.json(); // Parse JSON if login is successful
         } else {
-            throw new Error("Login failed"); // Handle failed login
+          throw new Error("Login failed"); // Handle failed login
         }
-    })
-    .then(data => {
+      })
+      .then(data => {
         console.log("Login successful:", data);
-        navigate("/welcome")
+        navigate("/welcome");
         localStorage.setItem("username", username);
         localStorage.setItem("password", password);
         localStorage.setItem("role", data.role); // Assuming `data` includes role info
         localStorage.setItem("id", data.id);
-
-
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.error("Error:", error);
         alert("Login failed");
-    });
+      });
   };
 
   return (
@@ -51,7 +51,6 @@ export default function Login() {
       noValidate
       autoComplete="off"
     >
-    
       <TextField
         id="username"
         label="Username"

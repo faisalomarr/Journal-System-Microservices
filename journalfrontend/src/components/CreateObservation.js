@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography, Alert } from '@mui/material';
+import { CREATE_OBSERVATION_URL } from '../config/apiConfig'; // Import the centralized URL
 
 function CreateObservation() {
   const [patientUsername, setPatientUsername] = useState('');
@@ -16,7 +17,7 @@ function CreateObservation() {
       timeOfObservation: new Date().toISOString(), // Current timestamp
     };
 
-    fetch('http://localhost:8081/CreateObservation', {
+    fetch(CREATE_OBSERVATION_URL, { // Use the centralized URL
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +26,7 @@ function CreateObservation() {
     })
       .then(response => {
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.text();
       })

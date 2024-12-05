@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, MenuItem, Select, InputLabel, FormControl, Box, Typography, Alert } from '@mui/material';
+import { CREATE_USER_URL, CREATE_PATIENT_URL, CREATE_PRACTITIONER_URL } from '../config/apiConfig'; // Import endpoints
 
 function CreateUser() {
   const [username, setUsername] = useState('');
@@ -15,8 +16,8 @@ function CreateUser() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const createform = { username, password, role };
-  
-    fetch('http://localhost:8082/create', {
+
+    fetch(CREATE_USER_URL, { // Use centralized URL for creating a user
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,12 +33,12 @@ function CreateUser() {
       .then(data => {
         console.log('User created:', data);
         setMessage("User created successfully!");
-  
+
         if (role === 'PATIENT') {
           const userId = data.id;
           const patientform = { firstName, lastName, age, gender, userId };
-          
-          return fetch('http://localhost:8081/patientinfo/createpatient', {
+
+          return fetch(CREATE_PATIENT_URL, { // Use centralized URL for creating patient details
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -57,8 +58,8 @@ function CreateUser() {
         } else if (role === 'PRACTITIONER') {
           const userId = data.id;
           const practitionerform = { firstName, lastName, jobTitle, userId };
-          
-          return fetch('http://localhost:8081/createpractitioner', {
+
+          return fetch(CREATE_PRACTITIONER_URL, { // Use centralized URL for creating practitioner details
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -82,7 +83,6 @@ function CreateUser() {
         setMessage("Error creating user or role-specific details.");
       });
   };
-  
 
   return (
     <Box sx={{ width: 300, mx: 'auto', mt: 5 }}>
@@ -162,7 +162,7 @@ function CreateUser() {
             </FormControl>
           </>
         )}
-        
+
         {role === 'PRACTITIONER' && (
           <>
             <TextField

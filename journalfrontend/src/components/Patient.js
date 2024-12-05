@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Alert } from '@mui/material';
+import { GET_PATIENT_INFO_URL, GET_PATIENT_CONDITIONS_URL } from '../config/apiConfig'; // Import the centralized URLs
 
 function Patient() {
   const userId = localStorage.getItem("id"); // This is the user ID, not patient ID
@@ -10,8 +11,8 @@ function Patient() {
   // Fetch patient information on component mount
   useEffect(() => {
     console.log(userId);
-    // First, fetch patient information using userId
-    fetch(`http://localhost:8081/patientinfo/${userId}`, {
+
+    fetch(`${GET_PATIENT_INFO_URL}/${userId}`, { // Use centralized URL
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -35,8 +36,8 @@ function Patient() {
   // Fetch conditions when patientInfo is available
   useEffect(() => {
     if (patientInfo && patientInfo.id) {
-        const patientId =patientInfo.id;
-      fetch(`http://localhost:8081/conditions/patient/${patientId}`, {
+      const patientId = patientInfo.id;
+      fetch(`${GET_PATIENT_CONDITIONS_URL}/${patientId}`, { // Use centralized URL
         method: "GET",
         headers: {
           "Content-Type": "application/json",

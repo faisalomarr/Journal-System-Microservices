@@ -1,34 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Box, Typography, Alert, List, ListItem, ListItemText, ListItemSecondaryAction } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { GET_ALL_PATIENTS_URL } from '../config/apiConfig'; // Import centralized URL
+
 function GetAllPatients() {
   const [patients, setPatients] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  
 
   // Function to fetch all patients
   const fetchAllPatients = () => {
-    fetch('http://localhost:8081/patientinfo/all', {
+    fetch(GET_ALL_PATIENTS_URL, { // Use centralized URL
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json(); // Expect JSON response
-    })
-    .then(data => {
-      console.log("Fetched patients data:", data); 
-      setPatients(data); // Set patients data in state
-    })
-    .catch(error => {
-      console.error('Error fetching patients:', error);
-      setErrorMessage("Error fetching patients.");
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json(); // Expect JSON response
+      })
+      .then(data => {
+        console.log("Fetched patients data:", data); 
+        setPatients(data); // Set patients data in state
+      })
+      .catch(error => {
+        console.error('Error fetching patients:', error);
+        setErrorMessage("Error fetching patients.");
+      });
   };
 
   // useEffect to fetch patients when component mounts
@@ -38,15 +39,14 @@ function GetAllPatients() {
 
   // Handler to view patient information
   const handleViewInformation = (patientId) => {
-    localStorage.setItem("id",patientId)
+    localStorage.setItem("id", patientId);
     navigate("/patient");
   };
 
   // Handler to add condition for a patient
   const handleAddCondition = (patientId) => {
-    localStorage.setItem("id",patientId)
+    localStorage.setItem("id", patientId);
     navigate("/addcondition");
-    // Add form or navigation logic here
   };
 
   return (

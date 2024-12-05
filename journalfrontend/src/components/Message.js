@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography, Alert } from '@mui/material';
+import { SEND_MESSAGE_URL } from '../config/apiConfig'; // Import the centralized URL
 
 function Message() {
   const [receiverUsername, setReceiverUsername] = useState('');
   const [messageContent, setMessageContent] = useState('');
   const [message, setMessage] = useState('');
   const senderUsername = localStorage.getItem("username");
-  const role = localStorage.getItem("role");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,31 +16,31 @@ function Message() {
       text: messageContent,
     };
 
-    fetch('http://localhost:8083/messageSend', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(messageForm),
+    fetch(SEND_MESSAGE_URL, { // Use centralized URL
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(messageForm),
     })
-    .then(response => {
+      .then(response => {
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.text(); // Use text instead of JSON
-    })
-    .then(data => {
+      })
+      .then(data => {
         if (data) {
-            console.log('Message sent:', data); // Log the response if there is any
+          console.log('Message sent:', data); // Log the response if there is any
         }
         setMessage("Message sent successfully!");
         setReceiverUsername('');
         setMessageContent('');
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.error('Error sending message:', error);
         setMessage("Error sending message.");
-    });
+      });
   };
 
   return (
