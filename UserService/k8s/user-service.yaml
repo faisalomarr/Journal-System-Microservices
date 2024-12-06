@@ -4,7 +4,7 @@ metadata:
   name: users-service
 spec:
   selector:
-    app: users-service
+    app: user-service
   ports:
     - protocol: TCP
       port: 80 # Cluster-wide port

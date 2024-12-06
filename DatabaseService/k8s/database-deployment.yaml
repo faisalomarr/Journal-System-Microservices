@@ -23,4 +23,4 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               value: "Bashartt123" # Ensure this matches your database configuration
             - name: MYSQL_DATABASE
-              value: "microservicestest"
+              value: "microservicestestKubernetes"

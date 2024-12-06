@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: journalfrontend-deployment
+  labels:
+    app: journalfrontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: journalfrontend
+  template:
+    metadata:
+      labels:
+        app: journalfrontend
+    spec:
+      containers:
+        - name: journalfrontend
+          image: johanes406/journalfrontend:latest  # Replace with your actual Docker Hub username
+          ports:
+            - containerPort: 3000  # The port your frontend listens on inside the container
+

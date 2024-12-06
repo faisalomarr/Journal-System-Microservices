@@ -15,7 +15,7 @@ export default function Login() {
     const loginform = { username, password };
     console.log(loginform);
 
-    fetch(LOGIN_URL, { // Use centralized URL
+    fetch('http://localhost:8080/login', { // Use centralized URL
       method: "POST",
       headers: {
         "Content-Type": "application/json",
