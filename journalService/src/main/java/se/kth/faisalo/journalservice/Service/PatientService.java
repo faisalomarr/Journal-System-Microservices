@@ -21,7 +21,9 @@ public class PatientService {
 
     public PatientService(PatientRepository patientRepository ) {
         this.patientRepository = patientRepository;
-        this.webClient = WebClient.builder().baseUrl("http://localhost:8082").build();
+        this.webClient = WebClient.builder()
+                .baseUrl("http://users-service:8082")  // Internal communication
+                .build();
 
     }
 

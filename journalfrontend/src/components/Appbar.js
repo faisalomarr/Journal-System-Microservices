@@ -64,6 +64,10 @@ export default function Appbar() {
     handleClose();
     navigate("/searchpatient");
   };
+  const handleSearchCondition = () => {
+    handleClose();
+    navigate("/searchcondition");
+  };
 
   const handlePatient = () => {
     handleClose();
@@ -83,6 +87,16 @@ export default function Appbar() {
   const handleVG= () => {
     handleClose();
     navigate("/pat");
+  };
+
+  const handleSearchEncounter= () => {
+    handleClose();
+    navigate("/searchencounter");
+  };
+
+  const handleSearchPatientByPractitioner= () => {
+    handleClose();
+    navigate("/searchpatientbypractitioner");
   };
 
   return (
@@ -111,6 +125,8 @@ export default function Appbar() {
                 <MenuItem onClick={handleInbox}>Look at messages received</MenuItem>
                 <MenuItem onClick={handleNote}>New patient note</MenuItem>
                 <MenuItem onClick={handleCondition}>New patient condition</MenuItem>
+                <MenuItem onClick={handleSearchEncounter}>Search encounters</MenuItem>
+                <MenuItem onClick={handleSearchPatientByPractitioner}>Search patients by practitioners</MenuItem>
               </>
             )}
             {loggedIn && role === "PATIENT" && (
@@ -126,7 +142,8 @@ export default function Appbar() {
                 <MenuItem onClick={handleInbox}>Look at messages received</MenuItem>
                 <MenuItem onClick={handleNote}>New patient note</MenuItem>
                 <MenuItem onClick={handleCondition}>New patient condition</MenuItem>
-                <MenuItem onClick={handleSearchPatient}>Look at info about patients</MenuItem>
+                <MenuItem onClick={handleSearchPatient}>Search patients through name</MenuItem>
+                <MenuItem onClick={handleSearchCondition}>Search patients through condition</MenuItem>
               </>
             )}
             {!loggedIn && (

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: journal-service
+  labels:
+    app: journal-service
+spec:
+  replicas: 2 # Number of pods to run
+  selector:
+    matchLabels:
+      app: journal-service
+  template:
+    metadata:
+      labels:
+        app: journal-service
+    spec:
+      containers:
+        - name: journal-service
+          image: faisalomarr/journal-service:latest # Replace with your actual image name
+          ports:
+            - containerPort: 8081 # Matches the port your service listens on
+
+          env:
+            - name: DB_HOST
+              value: "database-service" # Matches the name of your database service
+            - name: DB_PORT
+              value: "3306" # MySQL default port
+            - name: DB_USER
+              value: "root"
+            - name: DB_PASSWORD
+              value: "Afcsaka1!kth2"
+            - name: DB_NAME
+              value: "microservicestestKubernetes" # The database name defined in MySQL

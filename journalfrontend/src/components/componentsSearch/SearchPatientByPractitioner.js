@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Button, Box, Typography, Alert, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-function SearchPatient() {
+function SearchPatientByPractitioner() {
     const navigate = useNavigate();
-    const [username, setusername] = useState("");
+    const [username, setUsername] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleSearch = (e) => {
         e.preventDefault();
 
-        fetch(`http://localhost:8084/patiensQuarkus?name=${username}`, {
+        fetch(`http://localhost:8084/patientsQuarkus/by-practitioner?name=${username}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -24,10 +24,8 @@ function SearchPatient() {
         })
         .then(data => {
             console.log(data);
-            
-                localStorage.setItem("id",data)
-                navigate("/patient");
-        
+            // Navigate to "/patientsByName" with the data
+            navigate("/patientsByName", { state: { patients: data } });
         })
         .catch(error => {
             console.error('Error fetching user', error);
@@ -37,13 +35,13 @@ function SearchPatient() {
 
     return (
         <Box>
-            <Typography variant="h4" gutterBottom>Search for Patient</Typography>
+            <Typography variant="h4" gutterBottom>Search for patient By practitioner</Typography>
             <Box component="form" onSubmit={handleSearch}>
                 <TextField
-                    label="Username"
+                    label="name"
                     variant="outlined"
                     value={username}
-                    onChange={(e) => setusername(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
                     style={{ marginBottom: '1rem' }}
                 />
                 <Button variant="contained" type="submit">Search</Button>
@@ -56,4 +54,4 @@ function SearchPatient() {
     );
 }
 
-export default SearchPatient;
+export default SearchPatientByPractitioner;

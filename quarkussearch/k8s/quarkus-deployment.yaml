@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quarkus-search-service
+  labels:
+    app: quarkus-search-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: quarkus-search-service
+  template:
+    metadata:
+      labels:
+        app: quarkus-search-service
+    spec:
+      containers:
+        - name: quarkus-search-service
+          image: faisalomarr/quarkus-search-service:jvm
+          ports:
+            - containerPort: 8084 # Matches the port your Quarkus application listens on
+          env:
+            - name: QUARKUS_DATASOURCE_DB_KIND
+              value: "mysql"
+            - name: QUARKUS_DATASOURCE_REACTIVE_URL
+              value: "vertx-reactive:mysql://database-service:3306/microservicestestKubernetes" # Updated for Kubernetes
+            - name: QUARKUS_DATASOURCE_USERNAME
+              value: "root"
+            - name: QUARKUS_DATASOURCE_PASSWORD
+              value: "Afcsaka1!kth2"
+            - name: QUARKUS_HTTP_PORT
+              value: "8084"
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"

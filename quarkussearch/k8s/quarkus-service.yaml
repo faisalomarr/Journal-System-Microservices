@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: quarkus-search-service
+  labels:
+    app: quarkus-search-service
+spec:
+  type: ClusterIP
+  selector:
+    app: quarkus-search-service
+  ports:
+    - protocol: TCP
+      port: 8084             # Internal service port for communication
+      targetPort: 8084     # Matches the containerPort in the deployment
