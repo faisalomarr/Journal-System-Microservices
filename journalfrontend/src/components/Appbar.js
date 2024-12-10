@@ -99,6 +99,10 @@ export default function Appbar() {
     navigate("/searchpatientbypractitioner");
   };
 
+  const handleImageService = () => {
+    navigate("/image-Service");
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -144,6 +148,8 @@ export default function Appbar() {
                 <MenuItem onClick={handleCondition}>New patient condition</MenuItem>
                 <MenuItem onClick={handleSearchPatient}>Search patients through name</MenuItem>
                 <MenuItem onClick={handleSearchCondition}>Search patients through condition</MenuItem>
+                <MenuItem onClick={handleImageService}>Handle Images</MenuItem>
+
               </>
             )}
             {!loggedIn && (

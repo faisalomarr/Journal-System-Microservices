@@ -21,6 +21,7 @@ import SearchCondition from './components/componentsSearch/SearchCondition';
 import SearchEncounters from './components/componentsSearch/SearchEncounters';
 import Encounters from './components/Encounters';
 import SearchPatientByPractitioner from './components/componentsSearch/SearchPatientByPractitioner';
+import ImageService from './components/ImageService';
 
 
 
@@ -50,6 +51,8 @@ function App() {
         <Route path="/searchencounter" element={<SearchEncounters />} /> {/* Closing tag fixed */}
         <Route path="/Encounters" element={<Encounters />} /> {/* Closing tag fixed */}
         <Route path="/searchpatientbypractitioner" element={<SearchPatientByPractitioner />} /> {/* Closing tag fixed */}
+        <Route path="/image-service" element={<ImageService />} /> {/* Closing tag fixed */}
+
 
 
 

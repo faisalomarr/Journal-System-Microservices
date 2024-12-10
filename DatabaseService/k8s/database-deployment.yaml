@@ -16,11 +16,11 @@ spec:
     spec:
       containers:
         - name: database-container
-          image: faisalomarr/custom-mysql:latest # Use your pushed image
+          image: johanes406/custom-mysql:latest # Use your pushed image
           ports:
             - containerPort: 3306
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: "Afcsaka1!kth2" # Ensure this matches your database configuration
+              value: "Bashartt123" # Ensure this matches your database configuration
             - name: MYSQL_DATABASE
               value: "microservicestestKubernetes"

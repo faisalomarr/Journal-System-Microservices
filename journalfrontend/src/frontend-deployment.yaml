@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: journalfrontend
-          image: faisalomarr/journalfrontend:latest  # Replace with your actual Docker Hub username
+          image: johanes406/journalfrontend:latest  # Replace with your actual Docker Hub username
           ports:
             - containerPort: 3000  # The port your frontend listens on inside the container

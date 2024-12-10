@@ -17,7 +17,9 @@ public class ObservationService {
 
     public ObservationService(ObservationRepository ObservationRepository, WebClient webClient) {
         this.ObservationRepository =  ObservationRepository;
-        this.webClient = WebClient.builder().baseUrl("http://localhost:8082").build();
+        this.webClient = WebClient.builder()
+                .baseUrl("http://users-service:8082")  // Internal communication
+                .build();
     }
 
     public void createObservation(ObservationDto observationDto) throws Exception{

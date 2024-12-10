@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: quarkus-search-service
-          image: faisalomarr/quarkus-search-service:jvm
+          image: johanes406/quarkus-search-service:jvm
           ports:
             - containerPort: 8084 # Matches the port your Quarkus application listens on
           env:
@@ -27,7 +27,7 @@ spec:
             - name: QUARKUS_DATASOURCE_USERNAME
               value: "root"
             - name: QUARKUS_DATASOURCE_PASSWORD
-              value: "Afcsaka1!kth2"
+              value: "Bashartt123"
             - name: QUARKUS_HTTP_PORT
               value: "8084"
           resources:

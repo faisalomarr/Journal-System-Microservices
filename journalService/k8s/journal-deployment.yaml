@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: journal-service
-          image: faisalomarr/journal-service:latest # Replace with your actual image name
+          image: johanes406/journal-service:latest # Replace with your actual image name
           ports:
             - containerPort: 8081 # Matches the port your service listens on
 
@@ -28,6 +28,6 @@ spec:
             - name: DB_USER
               value: "root"
             - name: DB_PASSWORD
-              value: "Afcsaka1!kth2"
+              value: "Bashartt123"
             - name: DB_NAME
               value: "microservicestestKubernetes" # The database name defined in MySQL

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: message-service
-          image: faisalomarr/message-service:latest # Replace with your actual image name
+          image: johanes406/message-service:latest # Replace with your actual image name
           ports:
             - containerPort: 8083 # Matches the port your service listens on
           env:
@@ -27,6 +27,6 @@ spec:
             - name: DB_USER
               value: "root"
             - name: DB_PASSWORD
-              value: "Afcsaka1!kth2"
+              value: "Bashartt123"
             - name: DB_NAME
               value: "microservicestestKubernetes" # The database name defined in MySQL

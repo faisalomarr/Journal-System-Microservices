@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Image</title>
+</head>
+<body>
+    <h1>Edit Image</h1>
+    <canvas id="canvas" width="800" height="600" style="border:1px solid black;"></canvas>
+    <br>
+    <button id="loadBtn">Load Image</button>
+    <button id="saveBtn">Save Edited Image</button>
+    <script>
+        // Selecting canvas and buttons
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const loadBtn = document.getElementById('loadBtn');
+        const saveBtn = document.getElementById('saveBtn');
+
+        let isDrawing = false;
+
+        // Enable drawing on the canvas
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDrawing = false;
+        });
+
+        // Load the image into the canvas
+        loadBtn.addEventListener('click', async () => {
+            const filename = prompt("Enter the filename to edit");
+            if (!filename) {
+                alert("Filename cannot be empty.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/files/${encodeURIComponent(filename)}`);
+                if (!response.ok) {
+                    alert("Image not found.");
+                    return;
+                }
+
+                const img = new Image();
+                img.src = URL.createObjectURL(await response.blob());
+                img.onload = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                };
+            } catch (error) {
+                console.error("Error loading image:", error);
+                alert("An error occurred while loading the image.");
+            }
+        });
+
+        // Save the edited image back to the server
+        saveBtn.addEventListener('click', async () => {
+            canvas.toBlob(async (blob) => {
+                if (!blob) {
+                    alert("Failed to generate image.");
+                    return;
+                }
+
+                const user_id = prompt("Enter your user ID:");
+                if (!user_id) {
+                    alert("User ID is required to save the image.");
+                    return;
+                }
+
+                const filename = `edited-${Date.now()}.png`;
+                const formData = new FormData();
+                formData.append("file", blob, filename);
+                formData.append("user_id", user_id);
+
+                try {
+                    const response = await fetch('/api/save-edited', {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        alert("Edited image saved successfully at: " + result.filePath);
+                    } else {
+                        alert("Failed to save the edited image.");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("An error occurred while saving the image.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
